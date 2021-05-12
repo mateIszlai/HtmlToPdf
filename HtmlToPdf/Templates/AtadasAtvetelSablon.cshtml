@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table{
+            width:100%;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+
+        th{
+            text-align:left;
+        }
+
+        .mainRow{
+            margin-top: 20px;
+            padding:0px;
+        }
+
+        .borderedTable, .borderedTable th, .borderedTable td{
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        body, b, td, th{
+            font-family:'Times New Roman';
+            font-size:medium;
+        }
+
+        b{
+            font-size:larger;
+        }
+
+        #cegAdatokList{
+            padding:0px;
+            list-style-type:none;
+        }
+        .cegAdatItem{
+            margin-top:10px;
+        }
+    </style>
+</head>
+<body>
+    <table border="0" id="baseTable">
+        <tr>
+            <td>
+                <table class="borderedTable">
+                    <tr>
+                        <td width="50%" valign="middle">
+                            <ul id="cegAdatokList">
+                                <li><b>Cég neve</b></li>
+                                <li class="cegAdatItem">Cég adat1</li>
+                                <li class="cegAdatItem">Cég adat2</li>
+                                <li class="cegAdatItem">Cég adat3</li>
+                            </ul>
+                        </td>
+                        <td width="20%" align="center">
+                            @Model.AtadasTipus.ToUpper()
+                        </td>
+                        <td width="30%" align="center">
+                            Sorszám: @Model.AtadasKod
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr class="mainRow">
+            <td>
+                <b>Átvevő adatai</b>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="borderedTable">
+                    <tr>
+                        <td width="30px">Név</td>
+                        <td>@Model.UgyfelNev</td>
+                    </tr>
+                    <tr>
+                        <td width="30px">Cím</td>
+                        <td>
+                            @Model.Irsz @Model.Varos @Model.Cim
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr class="mainRow">
+            <td>
+                <b>Átadás dátuma</b>
+            </td>
+        </tr>
+        <tr>
+            <td>@Model.AtadasDatum.ToString("yyyy.MM.dd.")</td>
+        </tr>
+        @{
+            if (!string.IsNullOrEmpty(Model.Megjegyzes))
+            {
+                <tr class="mainRow">
+                    <td>
+                        <b>Megjegyzés</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>@Model.Megjegyzes</td>
+                </tr>
+            }
+        }
+        @{ 
+            if (@Model.Tetelek.Count > 0)
+            {
+                <tr class="mainRow">
+                    <td>
+                        <b>Tételek</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="borderedTable">
+                            <thead>
+                                <tr>
+                                    <th>Típus</th>
+                                    <th>Kerékpár megnevezése</th>
+                                    <th>Szoftver verzió</th>
+                                    <th>Km</th>
+                                    <th>Lánckopás</th>
+                                    <th>Gumikopás</th>
+                                    <th>Akku állapot</th>
+                                    <th>Megjegyzés</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var tetel in Model.Tetelek)
+                                    {
+                                        <tr>
+                                            <td>@tetel.AtadasTipusNev</td>
+                                            <td>@tetel.KerekparMegnevezes</td>
+                                            <td>@tetel.SzoftverVerzio</td>
+                                            <td>@tetel.Km</td>
+                                            <td>@tetel.LanckopasNev</td>
+                                            <td>@tetel.GumikopasNev</td>
+                                            <td>@tetel.AkkuAllapotNev</td>
+                                            <td>@tetel.Megjegyzes</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                
+            }
+        }
+    </table>
+</body>
+
+</html>

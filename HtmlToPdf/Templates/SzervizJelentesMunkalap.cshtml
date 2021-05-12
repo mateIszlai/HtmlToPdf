@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            width: 100%;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+
+        th {
+            text-align: left;
+        }
+
+        .mainRow {
+            margin-top: 20px;
+            padding: 0px;
+        }
+
+        .borderedTable, .borderedTable th, .borderedTable td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        body, b, td, th {
+            font-family: 'Times New Roman';
+            font-size: small;
+        }
+
+        b {
+            font-size: larger;
+        }
+
+        #cegAdatokList {
+            padding: 0px;
+            list-style-type: none;
+        }
+
+        .cegAdatItem {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <table border="0" id="baseTable">
+        <tr>
+            <td>
+                <table class="borderedTable">
+                    <tr>
+                        <td width="50%" valign="middle">
+                            <ul id="cegAdatokList">
+                                <li><b>Cég neve</b></li>
+                                <li class="cegAdatItem">Cég adat1</li>
+                                <li class="cegAdatItem">Cég adat2</li>
+                                <li class="cegAdatItem">Cég adat3</li>
+                            </ul>
+                        </td>
+                        <td width="20%" align="center">
+                            MUNKALAP
+                        </td>
+                        <td width="30%" align="center">
+                            Munkalap azonosítója: @Model.MunkalapFejKod
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr class="mainRow">
+            <td>
+                <b>Ügyfél adatai</b>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="borderedTable">
+                    <tr>
+                        <td width="120px">Szervízbe adó neve</td>
+                        <td>@Model.UgyfelNev</td>
+                    </tr>
+                    <tr>
+                        <td width="120px">Szervíz után átvevő neve</td>
+                        <td>@Model.UgyfelNevBefejezes</td>
+                    </tr>
+                    <tr>
+                        <td width="120px">Cím</td>
+                        <td>
+                            @Model.Irsz @Model.Varos @Model.Cim
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr class="mainRow">
+            <td>
+                <b>Kerékpár adatai</b>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="borderedTable">
+                    <thead>
+                        <tr>
+                            <th>Kerékpár megnevezése</th>
+                            <th>Szoftver verzió</th>
+                            <th>Km</th>
+                            <th>Lánckopás</th>
+                            <th>Gumikopás</th>
+                            <th>Akku állapot</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.KerekparMegnevezes</td>
+                            <td>@Model.SzoftverVerzio</td>
+                            <td>@Model.Km</td>
+                            <td>@Model.LanckopasNev</td>
+                            <td>@Model.GumikopasNev</td>
+                            <td>@Model.AkkuAllapotNev</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr class="mainRow">
+            <td>
+                <b>Munka adatai</b>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="borderedTable">
+                    <tr>
+                        <td>Munka kezdete</td>
+                        <td>@Model.DatumKezdet.ToString("yyyy.MM.dd. hh:mm")</td>
+                    </tr>
+                    <tr>
+                        <td>Munka vége</td>
+                        <td>@Model.DatumVeg.ToString("yyyy.MM.dd. hh:mm")</td>
+                    </tr>
+                    <tr>
+                        <td>Szervíz hossza</td>
+                        <td>@Model.SzervizHossz perc</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        @{
+            if (!string.IsNullOrEmpty(Model.Megjegyzes))
+            {
+                <tr class="mainRow">
+                    <td>
+                        <b>Megjegyzés</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>@Model.Megjegyzes</td>
+                </tr>
+            }
+
+
+        }
+        @{
+            if (!string.IsNullOrEmpty(Model.EgyebTevekenysegek))
+            {
+                <tr class="mainRow">
+                    <td>
+                        <b>Egyéb tevékenyégek</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>@Model.EgyebTevekenysegek</td>
+                </tr>
+            }
+        }
+        @{
+            if (@Model.Tetelek.Count > 0)
+            {
+                <tr class="mainRow">
+                    <td>
+                        <b>Tételek</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="borderedTable">
+                            <thead>
+                                <tr>
+                                    <th>Alkatrész neve</th>
+                                    <th>Mennyiség</th>
+                                    <th>Megjegyzés</th>
+                                    <th>Önköltség</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var tetel in Model.Tetelek)
+                                    {
+                                        <tr>
+                                            <td>@tetel.AlkatreszNev</td>
+                                            <td>@tetel.Mennyiseg</td>
+                                            <td>@tetel.Megjegyzes</td>
+                                            <td>@tetel.Onkoltseg</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+            }
+        }
+    </table>
+</body>
+
+</html>
+
+
