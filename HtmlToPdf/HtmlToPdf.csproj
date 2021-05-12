@@ -101,7 +101,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Templates\AtadasAtvetelSablon.cshtml" />
-    <None Include="Templates\SzervizJelentes.cshtml" />
     <None Include="Templates\SzervizJelentesMunkalap.cshtml" />
   </ItemGroup>
   <ItemGroup />
